@@ -1,8 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserService {
-  private logger = new Logger(UserService.name);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async findLoginUser(email: string, password: string) {
@@ -22,14 +21,5 @@ export class UserService {
         lastName: 'Doe'
       };
     }
-    // return await this.repo.find({
-    //   attributes: ['id', 'email', 'firstName', 'lastName'],
-    //   where: {
-    //     email,
-    //     password,
-    //     isActive: true,
-    //   },
-    //   include: [Role],
-    // });
   }
 }

@@ -24,13 +24,15 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
   afterInit() {
     console.log("gateway inited");
+    this.server.socketsJoin('room1');
   }
 
   async handleConnection(client: any) {
     const result = await this.wsAuthGurad.canActivate(client);
     if (!result) {
-      client.send("Unauthorized");
       client.disconnect();
+    } else {
+
     }
   }
 

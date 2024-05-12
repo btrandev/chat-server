@@ -15,8 +15,9 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async login(@Req() req, @Body() loginDto: LoginDto) {
-    const { access_token } = await this.authService.login(req.user);
-    return { user: req.user, access_token };
+    // const { access_token } = await this.authService.login(req.user);
+    // return { user: req.user, access_token };
+    return req.user;
   }
 
   @Get('/test')

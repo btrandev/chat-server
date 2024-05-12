@@ -18,7 +18,7 @@ export class WsStrategy extends PassportStrategy(Strategy, 'ws') {
   constructor() {
     super({
       jwtFromRequest: extractJwtFromWs(),
-      ignoreExpiration: true,
+      ignoreExpiration: false,
       secretOrKey: jwtConstants.secret,
     });
   }
