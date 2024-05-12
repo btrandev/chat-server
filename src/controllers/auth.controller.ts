@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/nest/auth/auth.service';
 import { LocalAuthGuard } from 'src/nest/auth/local-auth.guard';
@@ -12,6 +12,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('/login')
+  @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async login(@Req() req, @Body() loginDto: LoginDto) {

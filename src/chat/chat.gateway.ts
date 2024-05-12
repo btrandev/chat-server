@@ -24,7 +24,6 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
   afterInit() {
     console.log("gateway inited");
-    this.server.socketsJoin('room1');
   }
 
   async handleConnection(client: any) {
@@ -32,19 +31,21 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     if (!result) {
       client.disconnect();
     } else {
-
+      client.join('room1');
+      this.server.to('room1').emit('onMessage', 'a client connected');
     }
   }
 
 
   handleDisconnect() {
     console.log("a client disconnected");
+    this.server.to('room1').emit('onMessage', 'a client disconnected');
   }
 
   @UseGuards(WsAuthGuard)
   @SubscribeMessage('onMessage')
   onMessage(@MessageBody() data: Message) {
     console.log({ data });
-    this.server.emit('onMessage', data);
+    this.server.to('room1').emit('onMessage', data);
   }
 }
