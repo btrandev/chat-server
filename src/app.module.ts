@@ -1,6 +1,3 @@
-import { config } from 'dotenv';
-config({ debug: false });
-
 import { Module } from '@nestjs/common';
 import { AuthModule } from './nest/auth/auth.module';
 import { ServiceModule } from './services/services.module';

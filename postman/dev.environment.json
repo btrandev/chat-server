@@ -1,0 +1,21 @@
+{
+	"id": "a0b5ee67-497b-489c-a649-ac7bf6318b10",
+	"name": "qualgo_dev",
+	"values": [
+		{
+			"key": "authToken1",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "authToken2",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-05-12T06:33:21.465Z",
+	"_postman_exported_using": "Postman/10.20.8"
+}

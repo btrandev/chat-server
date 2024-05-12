@@ -1,0 +1,12 @@
+version: "1"
+services:
+  chat-server:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: chatserver:latest
+    environment:
+      - PORT=4002
+    ports:
+      - 8181:8181
+      - 4002:4002
