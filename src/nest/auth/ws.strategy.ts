@@ -1,0 +1,29 @@
+import { Strategy } from 'passport-jwt';
+import { PassportStrategy } from '@nestjs/passport';
+import { Injectable } from '@nestjs/common';
+import { jwtConstants } from './constants';
+
+function extractJwtFromWs() {
+  return function (request) {
+    const header = request.handshake.headers['authorization'];
+    if (header) {
+        return header.split(' ')[1];
+    }
+    return null;
+};
+}
+
+@Injectable()
+export class WsStrategy extends PassportStrategy(Strategy, 'ws') {
+  constructor() {
+    super({
+      jwtFromRequest: extractJwtFromWs(),
+      ignoreExpiration: true,
+      secretOrKey: jwtConstants.secret,
+    });
+  }
+
+  async validate(user: any) {
+    return user;
+  }
+}
