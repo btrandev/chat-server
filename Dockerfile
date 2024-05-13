@@ -23,7 +23,7 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY package*.json ./
 
-RUN npm ci --production
+RUN npm i --production
 
 COPY --from=builder /usr/src/app/dist ./dist
 

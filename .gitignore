@@ -56,3 +56,4 @@ coverage
 test-report.xml
 package-lock.json
 *.rdb
+mine.md
