@@ -8,17 +8,24 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - 27017:27017
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes: 
+      - ./redis-data:/data
   chat-server:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: chatserver:latest
+    image: chatserver:0.3
     environment:
       - PORT=4002
-      - MONGODB_ADMINUSERNAME=root
-      - MONGODB_ADMINPASSWORD=example
       - MONGODB_URL=mongodb://root:example@mongo:27017/
+      - REDIS_URL=redis://redis:6379
       - BASICAUTH=false
     ports:
-      - 8181:8181
-      - 4002:4002
+      - 8282:8181
+      - 8002:4002

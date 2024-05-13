@@ -16,11 +16,11 @@ import { CurrentUser } from 'src/nest/decorators/user.decor';
 import UserDto from 'src/auth/dtos/user.dto';
 import { Socket } from 'src/nest/decorators/socket.decor';
 
-const enum EVENTS  {
-    join = 'join',
-    chat = 'chat',
-    leave = 'leave',
-    welcome = 'welcome'
+const enum EVENTS {
+  join = 'join',
+  chat = 'chat',
+  leave = 'leave',
+  welcome = 'welcome'
 }
 
 @WebSocketGateway(8181)
@@ -38,10 +38,10 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   async afterInit() {
     this.logger.log("Server started");
     let room = await this.roomService.findOne(this.defaultRoom);
-    if(!room) {
+    if (!room) {
       this.logger.log('Creating new room');
-      room = await this.roomService.create({name: this.defaultRoom, messages: []});
-      if(!room) {
+      room = await this.roomService.create({ name: this.defaultRoom, messages: [] });
+      if (!room) {
         throw new WsException('Cannot create room');
       }
     }
@@ -49,7 +49,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   }
 
   async handleConnection(socket: any, @CurrentUser() user: any) {
-    this.logger.log({user});
+    this.logger.log({ user });
     const result = await this.wsAuthGurad.canActivate(socket);
     if (!result) {
       socket.disconnect();
@@ -75,11 +75,11 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @UseGuards(WsAuthGuard)
   @SubscribeMessage(EVENTS.join)
   async join(@CurrentUser() user: UserDto, @Socket() socket: any) {
-      socket.join(this.defaultRoom);
-      this.server.to(this.defaultRoom).emit(EVENTS.join, user.firstName + ' joined ' + this.defaultRoom);
-      
-      const room = await this.roomService.findOne(this.defaultRoom);
-      this.server.in(socket.id).emit(EVENTS.welcome, room.messages);
+    socket.join(this.defaultRoom);
+    this.server.to(this.defaultRoom).emit(EVENTS.join, user.firstName + ' joined ' + this.defaultRoom);
+
+    const room = await this.roomService.findOne(this.defaultRoom);
+    this.server.in(socket.id).emit(EVENTS.welcome, room.messages);
   }
 
   @UseGuards(WsAuthGuard)

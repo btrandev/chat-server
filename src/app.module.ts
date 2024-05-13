@@ -7,9 +7,8 @@ import { LocalStrategy } from './auth/local.strategy';
 import { ChatModule } from './chat/chat.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import 'dotenv/config';
-console.log(process.env.MONGODB_URL);
-const Controllers: any[] = [AuthController];
 
+const Controllers: any[] = [AuthController];
 const AppModules = [AuthModule, ChatModule];
 @Module({
   imports: [
