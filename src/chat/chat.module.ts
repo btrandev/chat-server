@@ -1,9 +1,13 @@
 import { Module } from "@nestjs/common";
 import { ChatGateway } from "./chat.gateway";
-import { WsAuthGuard } from "src/nest/auth/ws-auth.guard";
-import { WsStrategy } from "src/nest/auth/ws.strategy";
+import { WsAuthGuard } from "src/auth/ws-auth.guard";
+import { WsStrategy } from "src/auth/ws.strategy";
+import { RoomService } from "./room.service";
+import { MongooseModule } from "@nestjs/mongoose";
+import { Room, RoomSchema } from "./schemas/room.schema";
 
 @Module({
-    providers: [ChatGateway, WsAuthGuard, WsStrategy],
+    imports: [MongooseModule.forFeature([{ name: Room.name, schema: RoomSchema }])],
+    providers: [ChatGateway, WsAuthGuard, WsStrategy, RoomService],
 })
 export class ChatModule { }

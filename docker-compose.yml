@@ -1,5 +1,13 @@
 version: "1"
 services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
   chat-server:
     build:
       context: ./
@@ -7,6 +15,10 @@ services:
     image: chatserver:latest
     environment:
       - PORT=4002
+      - MONGODB_ADMINUSERNAME=root
+      - MONGODB_ADMINPASSWORD=example
+      - MONGODB_URL=mongodb://root:example@mongo:27017/
+      - BASICAUTH=false
     ports:
       - 8181:8181
       - 4002:4002
