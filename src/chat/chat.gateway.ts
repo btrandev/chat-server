@@ -49,8 +49,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     this.logger.log('lobby room is ready');
   }
 
-  async handleConnection(socket: any, @CurrentUser() user: any) {
-    this.logger.log({ user });
+  async handleConnection(socket: any) {
     const result = await this.wsAuthGurad.canActivate(socket);
     if (!result) {
       socket.disconnect();
