@@ -1,5 +1,5 @@
 export interface MessageDto {
-    sender: string;
+    sender: number;
     message: string;
     timestamp: number;
 }

@@ -20,7 +20,8 @@ const enum EVENTS {
   join = 'join',
   chat = 'chat',
   leave = 'leave',
-  welcome = 'welcome'
+  welcome = 'welcome',
+  deleteMessage = 'deleteMessage'
 }
 
 @WebSocketGateway(8181)
@@ -87,5 +88,15 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   async leave(@CurrentUser() user: UserDto, @Socket() socket: any) {
     socket.disconnect();
     this.server.to(this.defaultRoom).emit(EVENTS.leave, user.firstName + ' left');
+  }
+
+  @UseGuards(WsAuthGuard)
+  @SubscribeMessage(EVENTS.deleteMessage)
+  async deleteMessage(@CurrentUser() user: UserDto, @MessageBody() data: string) {
+    await this.roomService.deleteMessage(this.defaultRoom, {
+      sender: user.id,
+      timestamp: parseInt(data)
+    });
+    return true;
   }
 }
