@@ -46,15 +46,12 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
         throw new WsException('Cannot create room');
       }
     }
-    this.logger.log('lobby room is ready');
+    this.logger.log(this.defaultRoom + ' room is ready');
   }
 
   async handleConnection(socket: any) {
     // TODO: ensure only one socket of a same user at a time
-    const result = await this.wsAuthGurad.canActivate(socket);
-    if (!result) {
-      socket.disconnect();
-    }
+    await this.wsAuthGurad.canActivate(socket);
   }
 
   async handleDisconnect() {
@@ -84,7 +81,6 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     this.server.in(socket.id).emit(EVENTS.welcome, room.messages);
   }
 
-  @UseGuards(WsAuthGuard)
   @SubscribeMessage(EVENTS.leave)
   async leave(@CurrentUser() user: UserDto, @Socket() socket: any) {
     socket.disconnect();

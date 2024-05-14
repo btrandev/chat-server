@@ -14,11 +14,7 @@
 - Redis to pub/sub events across multiple chat servers
 
 ## Build containers
-Build docker image
-- docker build . -t chat-server:local
-
-Build and run containers
-- docker-compose -d
+Run build.cmd (for Windows)
 
 ## Run unit tests
 npm run test

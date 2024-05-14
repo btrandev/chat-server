@@ -4,9 +4,12 @@ import { AuthGuard } from '@nestjs/passport';
 @Injectable()
 export class WsAuthGuard extends AuthGuard('ws') {
 
-  getRequest(context: ExecutionContext) {
-    if(context.switchToWs) {
+  getRequest(context: any) {
+    if (context.switchToWs) {
       return context.switchToWs().getClient();
+    }
+    if (context.getClient) {
+      return context.getClient();
     }
     return context;
   }
@@ -22,12 +25,11 @@ export class WsAuthGuard extends AuthGuard('ws') {
     return !!this.getRequest(context)['user'];
   }
 
-  handleRequest<TUser = any>(err: any, user: any, info: any): TUser {
-    if(err || info) {
-      console.log('Unauthorized client');
-      // TODO: throw excpetion if unauthorized (token expired). Exception filter also needed in this case
-      return null;
+  handleRequest<TUser = any>(err: any, user: any, info: any, context: any): TUser {
+    const socket = this.getRequest(context);
+    if (err || info) {
+      socket.disconnect();
     }
-      return user;
+    return user;
   }
 }
