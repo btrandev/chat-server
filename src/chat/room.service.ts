@@ -29,7 +29,7 @@ export class RoomService {
   }
 
   async deleteMessage(name: string, message: RemoveMessageDto) {
-    const result = await this.RoomModel.updateOne({ name: { $eq: name } }, {
+    const result = await this.RoomModel.findOneAndUpdate({ name: { $eq: name } }, {
       "$pull": {
         messages: {
           timestamp: message.timestamp,

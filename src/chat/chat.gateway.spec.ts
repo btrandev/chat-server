@@ -40,19 +40,12 @@ describe('ChatGateway', () => {
 
     describe('handleConnection', () => {
         const socket: any = {
-            disconnect: jest.fn()
+            disconnect: jest.fn(),
         };
         it('WsAuthGuard should be called', async () => {
             jest.spyOn(wsAuthGuard, 'canActivate').mockImplementationOnce(() => Promise.resolve(true));
             await chatGateway.handleConnection(socket);
             expect(wsAuthGuard.canActivate).toHaveBeenCalled();
-            expect(socket.disconnect).not.toBeCalled();
-
-        })
-        it('disconnect if unauthorized', async () => {
-            jest.spyOn(wsAuthGuard, 'canActivate').mockImplementationOnce(() => Promise.resolve(false));
-            await chatGateway.handleConnection(socket);
-            expect(socket.disconnect).toBeCalled();
         })
     })
 

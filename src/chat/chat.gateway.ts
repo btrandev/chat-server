@@ -90,7 +90,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @UseGuards(WsAuthGuard)
   @SubscribeMessage(EVENTS.deleteMessage)
   async deleteMessage(@CurrentUser() user: UserDto, @MessageBody() data: string) {
-    // TODO: in case not message owner return false
+    // TODO: what if the current is not message owner, return false?
     await this.roomService.deleteMessage(this.defaultRoom, {
       sender: user.id,
       timestamp: parseInt(data)
