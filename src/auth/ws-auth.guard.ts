@@ -25,6 +25,7 @@ export class WsAuthGuard extends AuthGuard('ws') {
   handleRequest<TUser = any>(err: any, user: any, info: any): TUser {
     if(err || info) {
       console.log('Unauthorized client');
+      // TODO: throw excpetion if unauthorized (token expired). Exception filter also needed in this case
       return null;
     }
       return user;

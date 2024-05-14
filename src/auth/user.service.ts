@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class UserService {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async findLoginUser(email: string, password: string) {
+  async findLoginUser(email: string, _: string) {
     if(email === 'abc@gmail.com') {
       return await {
         id: 1,

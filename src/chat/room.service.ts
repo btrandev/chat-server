@@ -8,6 +8,7 @@ import { RemoveMessageDto } from './dto/remove-message.dto';
 
 @Injectable()
 export class RoomService {
+  // TODO: use repository stead of directly RoomModel
   constructor(@InjectModel(Room.name) private readonly RoomModel: Model<Room>) { }
 
   async create(createRoomDto: CreateRoomDto): Promise<Room> {
@@ -23,7 +24,7 @@ export class RoomService {
     }).exec();
   }
 
-  async findOne(name: string): Promise<Room> {
+  async findRoom(name: string): Promise<Room> {
     return await this.RoomModel.findOne({ name }).exec();
   }
 

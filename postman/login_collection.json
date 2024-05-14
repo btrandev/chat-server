@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "cf3ff043-6dae-479b-b390-1db72e190ace",
-		"name": "Chat Server - login",
+		"name": "0. Chat Server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "2350077",
 		"_collection_link": "https://www.postman.com/btran24/workspace/chatserverdemo/collection/2350077-cf3ff043-6dae-479b-b390-1db72e190ace?action=share&source=collection_link&creator=2350077"
@@ -103,8 +103,8 @@
 					"script": {
 						"exec": [
 							"\r",
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(201);\r",
 							"});\r",
 							"\r",
 							"\r",
@@ -144,7 +144,8 @@
 							"\r",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -168,12 +169,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4002/api/auth/login",
+					"raw": "http://localhost:8002/api/auth/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "4002",
+					"port": "8002",
 					"path": [
 						"api",
 						"auth",
@@ -190,10 +191,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"\r",
-							"pm.test(\"Response status code is 500\", function () {\r",
+							"pm.test('Response status code is 500', function () {\r",
 							"    pm.expect(pm.response.code).to.equal(500);\r",
-							"});\r",
+							"})\r",
 							""
 						],
 						"type": "text/javascript"

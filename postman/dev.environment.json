@@ -1,5 +1,5 @@
 {
-	"id": "a0b5ee67-497b-489c-a649-ac7bf6318b10",
+	"id": "8f166cb5-a6d4-4373-93de-c050ca000a0b",
 	"name": "qualgo_dev",
 	"values": [
 		{
@@ -16,6 +16,6 @@
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2024-05-12T06:33:21.465Z",
-	"_postman_exported_using": "Postman/10.20.8"
+	"_postman_exported_at": "2024-05-14T03:13:47.722Z",
+	"_postman_exported_using": "Postman/11.0.12"
 }

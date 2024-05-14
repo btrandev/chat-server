@@ -38,7 +38,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
   async afterInit() {
     this.logger.log("Server started");
-    let room = await this.roomService.findOne(this.defaultRoom);
+    let room = await this.roomService.findRoom(this.defaultRoom);
     if (!room) {
       this.logger.log('Creating new room');
       room = await this.roomService.create({ name: this.defaultRoom, messages: [] });
@@ -50,6 +50,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   }
 
   async handleConnection(socket: any) {
+    // TODO: ensure only one socket of a same user at a time
     const result = await this.wsAuthGurad.canActivate(socket);
     if (!result) {
       socket.disconnect();
@@ -75,10 +76,11 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @UseGuards(WsAuthGuard)
   @SubscribeMessage(EVENTS.join)
   async join(@CurrentUser() user: UserDto, @Socket() socket: any) {
+    // TODO: able to use message body as a room id/name to attach the current socket to that room
     socket.join(this.defaultRoom);
     this.server.to(this.defaultRoom).emit(EVENTS.join, user.firstName + ' joined ' + this.defaultRoom);
 
-    const room = await this.roomService.findOne(this.defaultRoom);
+    const room = await this.roomService.findRoom(this.defaultRoom);
     this.server.in(socket.id).emit(EVENTS.welcome, room.messages);
   }
 
@@ -92,6 +94,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @UseGuards(WsAuthGuard)
   @SubscribeMessage(EVENTS.deleteMessage)
   async deleteMessage(@CurrentUser() user: UserDto, @MessageBody() data: string) {
+    // TODO: in case not message owner return false
     await this.roomService.deleteMessage(this.defaultRoom, {
       sender: user.id,
       timestamp: parseInt(data)
