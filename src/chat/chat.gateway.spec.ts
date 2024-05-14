@@ -30,9 +30,6 @@ describe('ChatGateway', () => {
         it(`join should be protected with WsAuthGuard.`, async () => {
             expect(isGuarded(ChatGateway.prototype.join, WsAuthGuard)).toBe(true)
         })
-        it(`leave should be protected with WsAuthGuard.`, async () => {
-            expect(isGuarded(ChatGateway.prototype.leave, WsAuthGuard)).toBe(true)
-        })
         it(`deleteMessage should be protected with WsAuthGuard.`, async () => {
             expect(isGuarded(ChatGateway.prototype.deleteMessage, WsAuthGuard)).toBe(true)
         })

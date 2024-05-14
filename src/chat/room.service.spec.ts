@@ -73,12 +73,12 @@ describe('RoomService', () => {
             sender: 1,
             timestamp: Date.now()
         }
-        jest.spyOn(roomModel, 'updateOne').mockImplementation((): any => {
+        jest.spyOn(roomModel, 'findOneAndUpdate').mockImplementation((): any => {
             return {
                 exec: jest.fn()
             }
         })
         await roomService.deleteMessage('roomName', messageDto);
-        expect(roomModel.updateOne).toBeCalled();
+        expect(roomModel.findOneAndUpdate).toBeCalled();
     })
 });
