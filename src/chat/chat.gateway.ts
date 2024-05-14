@@ -28,6 +28,7 @@ const enum EVENTS {
 export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
 
   private logger = new Logger(ChatGateway.name);
+  private socketsInRoom = new Set();
 
   @WebSocketServer()
   server: Server;
@@ -74,6 +75,10 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @SubscribeMessage(EVENTS.join)
   async join(@CurrentUser() user: UserDto, @Socket() socket: any) {
     // TODO: able to use message body as a room id/name to attach the current socket to that room
+    if(this.socketsInRoom.has(socket.id)) {
+      return 'You joined this room';
+    }
+    this.socketsInRoom.add(socket.id);
     socket.join(this.defaultRoom);
     this.server.to(this.defaultRoom).emit(EVENTS.join, user.firstName + ' joined ' + this.defaultRoom);
 

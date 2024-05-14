@@ -4,10 +4,11 @@ import { UserService } from 'src/auth/user.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService, private userService: UserService) {}
+  constructor(private jwtService: JwtService, private userService: UserService) { }
 
   async validateUser(email: string, password: string) {
     const user = await this.userService.findLoginUser(email, password);
+    if (!user) return null;
     const payload = { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName };
     return {
       user,
